@@ -1,8 +1,9 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:wasteagram/screens/list_screen.dart';
+import 'package:wasteagram/screens/post_list_screen.dart';
 import 'package:wasteagram/widgets/settings_drawer_widget.dart';
 import 'package:wasteagram/widgets/post_list_widget.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,12 +15,27 @@ class NewPostScreen extends StatefulWidget {
 }
 
 class _NewPostScreenState extends State<NewPostScreen> {
-//
+  int wasted = 0;
+
+  // uploads image to firebase prepending timestamp and getting the URL
+  Future uploadToFireBase(File data) async {
+    var storageReference = FirebaseStorage.instance.ref().child(data.path);
+    StorageUploadTask uploadTask = storageReference.putFile(data);
+    await uploadTask.onComplete;
+    String imageURL = await storageReference.getDownloadURL();
+    Firestore.instance.collection('posts').add({
+      // convert to server timestamp format
+      'date': Timestamp.fromDate(DateTime.now()),
+      'image': imageURL,
+      'wasted': wasted
+    });
+    Navigator.pushReplacementNamed(context, PostListScreen.routeName);
+  }
+
   @override
   Widget build(BuildContext context) {
     final File data = ModalRoute.of(context).settings.arguments;
     var image = Center(child: Image.file(data)) ?? Text("Error.");
-    var wasted = 0;
     return Scaffold(
       // key: _scaffoldKey,
       appBar: AppBar(
@@ -42,17 +58,12 @@ class _NewPostScreenState extends State<NewPostScreen> {
       ),
       endDrawer: SettingsDrawer(),
       floatingActionButton: FloatingActionButton(
-        tooltip: 'Submit Post',
-        child: Center(child: Icon(Icons.cloud_upload)),
-        onPressed: () {
-          Firestore.instance.collection('posts').add({
-            // convert to server timestamp format
-            'Date': Timestamp.fromDate(DateTime.now()),
-            'Items': wasted
-          });
-          Navigator.pushReplacementNamed(context, ListScreen.routeName);
-        },
-      ),
+          tooltip: 'Submit Post',
+          child: Center(child: Icon(Icons.cloud_upload)),
+          // Upload to firebase
+          onPressed: () async {
+            await uploadToFireBase(data);
+          }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }

@@ -22,12 +22,13 @@ class _PostListState extends State<PostList> {
                   var post = snapshot.data.documents[index];
                   return ListTile(
                     trailing: Text(
-                      post['Items'].toString(),
+                      post['wasted'].toString(),
                       style: Theme.of(content).textTheme.headline5,
                     ),
                     title: Text(DateFormat.yMMMMd('en_US')
                         .add_jm()
-                        .format((post['Date'].toDate()))),
+                        .format((post['date'].toDate()))),
+                    subtitle: Text(post['image']),
                     onTap: () {},
                   );
                 });

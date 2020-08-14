@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'screens/list_screen.dart';
+import 'screens/post_list_screen.dart';
 import 'screens/new_post_screen.dart';
 //import 'models/post.dart';
 
 class MyApp extends StatefulWidget {
   static final routes = {
-    ListScreen.routeName: (context) => ListScreen(),
+    PostListScreen.routeName: (context) => PostListScreen(),
     NewPostScreen.routeName: (context) => NewPostScreen()
   };
 

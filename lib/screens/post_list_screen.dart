@@ -5,13 +5,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:wasteagram/screens/new_post_screen.dart';
 import 'dart:io';
 
-class ListScreen extends StatefulWidget {
+class PostListScreen extends StatefulWidget {
   static const routeName = '/';
   @override
-  _ListScreenState createState() => _ListScreenState();
+  _PostListScreenState createState() => _PostListScreenState();
 }
 
-class _ListScreenState extends State<ListScreen> {
+class _PostListScreenState extends State<PostListScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   File image;
