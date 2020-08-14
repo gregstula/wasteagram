@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wasteagram/screens/post_screen.dart';
 import 'screens/post_list_screen.dart';
 import 'screens/new_post_screen.dart';
 //import 'models/post.dart';
@@ -6,7 +7,8 @@ import 'screens/new_post_screen.dart';
 class MyApp extends StatefulWidget {
   static final routes = {
     PostListScreen.routeName: (context) => PostListScreen(),
-    NewPostScreen.routeName: (context) => NewPostScreen()
+    NewPostScreen.routeName: (context) => NewPostScreen(),
+    PostScreen.routeName: (context) => PostScreen()
   };
 
   @override

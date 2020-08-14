@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:wasteagram/screens/post_list_screen.dart';
 import 'package:wasteagram/widgets/settings_drawer_widget.dart';
-import 'package:wasteagram/widgets/post_list_widget.dart';
-import 'package:image_picker/image_picker.dart';
 
 class NewPostScreen extends StatefulWidget {
   static const routeName = '/newPost';
@@ -26,7 +24,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
     Firestore.instance.collection('posts').add({
       // convert to server timestamp format
       'date': Timestamp.fromDate(DateTime.now()),
-      'image': imageURL,
+      'imageURL': imageURL,
       'wasted': wasted
     });
     Navigator.pushReplacementNamed(context, PostListScreen.routeName);
@@ -34,6 +32,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // get file from route argument
     final File data = ModalRoute.of(context).settings.arguments;
     var image = Center(child: Image.file(data)) ?? Text("Error.");
     return Scaffold(

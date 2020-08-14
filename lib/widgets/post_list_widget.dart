@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:wasteagram/app.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:wasteagram/screens/post_screen.dart';
+import 'package:wasteagram/models/post.dart';
 
 class PostList extends StatefulWidget {
   @override
@@ -19,17 +19,25 @@ class _PostListState extends State<PostList> {
             return ListView.builder(
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (content, index) {
-                  var post = snapshot.data.documents[index];
+                  final post = snapshot.data.documents[index];
+                  // format date to nice string
+                  final date = DateFormat.yMMMMd('en_US')
+                      .add_jm()
+                      .format((post['date'].toDate()));
                   return ListTile(
                     trailing: Text(
                       post['wasted'].toString(),
                       style: Theme.of(content).textTheme.headline5,
                     ),
-                    title: Text(DateFormat.yMMMMd('en_US')
-                        .add_jm()
-                        .format((post['date'].toDate()))),
-                    subtitle: Text(post['image']),
-                    onTap: () {},
+                    title: Text(date),
+                    subtitle: Text(post['imageURL']),
+                    onTap: () {
+                      Navigator.pushNamed(context, PostScreen.routeName,
+                          arguments: new Post(
+                              date: date,
+                              imageURL: post['imageURL'],
+                              wasted: post['wasted']));
+                    },
                   );
                 });
           } else {
