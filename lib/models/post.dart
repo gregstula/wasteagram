@@ -1,7 +1,9 @@
+import 'dart:io';
+
 class Post {
   Post({this.photo, this.date, this.items});
 
-  String photo;
-  String date;
+  File photo;
+  DateTime date;
   int items;
 }

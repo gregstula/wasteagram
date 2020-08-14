@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wasteagram/widgets/settings_drawer.dart';
-import 'package:wasteagram/widgets/post_list.dart';
+import 'package:wasteagram/widgets/settings_drawer_widget.dart';
+import 'package:wasteagram/widgets/post_list_widget.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wasteagram/screens/new_post_screen.dart';
 import 'dart:io';

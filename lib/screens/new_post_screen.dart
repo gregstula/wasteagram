@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wasteagram/widgets/settings_drawer.dart';
-import 'package:wasteagram/widgets/post_list.dart';
+import 'package:flutter/services.dart';
+import 'package:wasteagram/widgets/settings_drawer_widget.dart';
+import 'package:wasteagram/widgets/post_list_widget.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
@@ -14,14 +15,29 @@ class _NewPostScreenState extends State<NewPostScreen> {
 //
   @override
   Widget build(BuildContext context) {
-    final File arg = ModalRoute.of(context).settings.arguments;
-    var image = Center(child: Image.file(arg)) ?? Text("Error.");
+    final File data = ModalRoute.of(context).settings.arguments;
+    var image = Center(child: Image.file(data)) ?? Text("Error.");
+    var wasted = 0;
     return Scaffold(
       // key: _scaffoldKey,
       appBar: AppBar(
         title: Center(child: Text('Posts')),
       ),
-      body: image,
+      body: Column(
+        children: [
+          // image to upload
+          image,
+          // to enter wasted value
+          TextFormField(
+              decoration:
+                  InputDecoration(hintText: "Wasted", alignLabelWithHint: true),
+              keyboardType: TextInputType.number, // numbers only
+              inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+              style: Theme.of(context).textTheme.headline4,
+              textAlign: TextAlign.center,
+              onSaved: (newValue) => wasted = int.parse(newValue))
+        ],
+      ),
       endDrawer: SettingsDrawer(),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Submit Post',
