@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wasteagram/widgets/settings_drawer.dart';
-import 'package:wasteagram/widgets/post_list.dart';
+import 'package:wasteagram/widgets/post_list_copy.dart';
 
 class ListScreen extends StatefulWidget {
   @override
@@ -17,28 +17,30 @@ class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          title: Center(child: Text('Posts')),
-          actions: [
-            IconButton(
-              icon: Icon(
-                Icons.settings,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                _openDrawer();
-              },
-            )
-          ],
-        ),
-        body: PostList(),
-        endDrawer: SettingsDrawer(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushReplacementNamed(context, 'new_entry');
-          },
-          child: Icon(Icons.add),
-        ));
+      key: _scaffoldKey,
+      appBar: AppBar(
+        title: Center(child: Text('Posts')),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.settings,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              _openDrawer();
+            },
+          )
+        ],
+      ),
+      body: PostList(),
+      endDrawer: SettingsDrawer(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushReplacementNamed(context, 'new_entry');
+        },
+        child: Center(child: Icon(Icons.camera)),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
   }
 }

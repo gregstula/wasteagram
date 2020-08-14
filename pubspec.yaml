@@ -22,6 +22,8 @@ environment:
 
 dependencies:
   cloud_firestore:
+  firebase_storage:
+  intl:
   flutter:
     sdk: flutter
 

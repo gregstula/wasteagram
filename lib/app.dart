@@ -14,7 +14,7 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   bool darkMode = false;
   bool get getDarkMode => darkMode;
-  List<Post> posts = [];
+  List<Post> posts = [Post(date: "January", photo: "www.test.com", items: 3)];
 
   void changeMode(bool value) {
     setState(() {
