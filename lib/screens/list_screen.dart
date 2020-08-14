@@ -1,14 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:wasteagram/widgets/settings_drawer.dart';
-import 'package:wasteagram/widgets/post_list_copy.dart';
+import 'package:wasteagram/widgets/post_list.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:wasteagram/screens/new_post_screen.dart';
+import 'dart:io';
 
 class ListScreen extends StatefulWidget {
+  static const routeName = '/';
   @override
   _ListScreenState createState() => _ListScreenState();
 }
 
 class _ListScreenState extends State<ListScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  File image;
+  final picker = ImagePicker();
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      image = File(pickedFile.path);
+    });
+  }
 
   void _openDrawer() {
     _scaffoldKey.currentState.openEndDrawer();
@@ -35,10 +50,13 @@ class _ListScreenState extends State<ListScreen> {
       body: PostList(),
       endDrawer: SettingsDrawer(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushReplacementNamed(context, 'new_entry');
+        onPressed: () async {
+          await getImage();
+          Navigator.pushNamed(context, NewPostScreen.routeName,
+              arguments: image);
         },
-        child: Center(child: Icon(Icons.camera)),
+        tooltip: 'Pick Image',
+        child: Center(child: Icon(Icons.add_a_photo)),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

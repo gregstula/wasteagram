@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wasteagram/app.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class PostList extends StatefulWidget {
   @override
@@ -9,23 +12,28 @@ class PostList extends StatefulWidget {
 class _PostListState extends State<PostList> {
   @override
   Widget build(BuildContext context) {
-    MyAppState appState = context.findAncestorStateOfType<MyAppState>();
-    int listSize = appState.posts.length;
-    if (listSize != 0) {
-      return ListView.builder(
-        itemCount: listSize,
-        itemBuilder: (context, index) {
-          final post = appState.posts[index];
-          return ListTile(
-              title: Text(post.date),
-              subtitle: Text(post.items.toString()),
-              onLongPress: () {
-                //Navigator.pushNamed(context, '/', arguments: post);
-              });
-        },
-      );
-    } else {
-      return Center(child: CircularProgressIndicator());
-    }
+    return StreamBuilder(
+        stream: Firestore.instance.collection('posts').snapshots(),
+        builder: (content, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+                itemCount: snapshot.data.documents.length,
+                itemBuilder: (content, index) {
+                  var post = snapshot.data.documents[index];
+                  return ListTile(
+                    trailing: Text(
+                      post['Items'].toString(),
+                      style: Theme.of(content).textTheme.headline5,
+                    ),
+                    title: Text(DateFormat.yMMMMd('en_US')
+                        .add_jm()
+                        .format((post['Date'].toDate()))),
+                    onTap: () {},
+                  );
+                });
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        });
   }
 }
