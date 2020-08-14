@@ -1,9 +1,11 @@
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:wasteagram/screens/list_screen.dart';
 import 'package:wasteagram/widgets/settings_drawer_widget.dart';
 import 'package:wasteagram/widgets/post_list_widget.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 
 class NewPostScreen extends StatefulWidget {
   static const routeName = '/newPost';
@@ -35,14 +37,21 @@ class _NewPostScreenState extends State<NewPostScreen> {
               inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
               style: Theme.of(context).textTheme.headline4,
               textAlign: TextAlign.center,
-              onSaved: (newValue) => wasted = int.parse(newValue))
+              onChanged: (newValue) => wasted = int.parse(newValue))
         ],
       ),
       endDrawer: SettingsDrawer(),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Submit Post',
         child: Center(child: Icon(Icons.cloud_upload)),
-        onPressed: () {},
+        onPressed: () {
+          Firestore.instance.collection('posts').add({
+            // convert to server timestamp format
+            'Date': Timestamp.fromDate(DateTime.now()),
+            'Items': wasted
+          });
+          Navigator.pushReplacementNamed(context, ListScreen.routeName);
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
