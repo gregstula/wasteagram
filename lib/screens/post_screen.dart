@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wasteagram/models/post.dart';
+import 'package:wasteagram/widgets/location_info_widget.dart';
 
-class PostScreen extends StatefulWidget {
+class PostScreen extends StatelessWidget {
   static const routeName = '/postScreen';
-  @override
-  _PostScreenState createState() => _PostScreenState();
-}
-
-class _PostScreenState extends State<PostScreen> {
-  @override
   Widget build(BuildContext context) {
     final Post post = ModalRoute.of(context).settings.arguments;
     return Scaffold(
@@ -19,7 +14,8 @@ class _PostScreenState extends State<PostScreen> {
             post.wasted.toString(),
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headline3,
-          )
+          ),
+          LocationInfo(lat: post.lat, long: post.long)
         ]));
   }
 }

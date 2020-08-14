@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
 import 'package:wasteagram/screens/post_screen.dart';
 import 'package:wasteagram/models/post.dart';
 
@@ -15,27 +14,22 @@ class _PostListState extends State<PostList> {
     return StreamBuilder(
         stream: Firestore.instance.collection('posts').snapshots(),
         builder: (content, snapshot) {
-          if (snapshot.hasData) {
+          if (snapshot.hasData && snapshot.data.documents.length > 0) {
             return ListView.builder(
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (content, index) {
-                  final post = snapshot.data.documents[index];
+                  final dynamicData = snapshot.data.documents[index];
                   // format date to nice string
-                  final date = DateFormat.yMMMMd('en_US')
-                      .add_jm()
-                      .format((post['date'].toDate()));
+                  final post = Post.fromDynamic(dynamicData);
                   return ListTile(
                     trailing: Text(
-                      post['wasted'].toString(),
+                      post.wasted.toString(),
                       style: Theme.of(content).textTheme.headline5,
                     ),
-                    title: Text(date),
+                    title: Text(post.date),
                     onTap: () {
                       Navigator.pushNamed(context, PostScreen.routeName,
-                          arguments: new Post(
-                              date: date,
-                              imageURL: post['imageURL'],
-                              wasted: post['wasted']));
+                          arguments: post);
                     },
                   );
                 });
