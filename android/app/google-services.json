@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "439168924125",
+    "firebase_url": "https://stulag-181ab.firebaseio.com",
+    "project_id": "stulag-181ab",
+    "storage_bucket": "stulag-181ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:439168924125:android:488f925b0c979e2543de34",
+        "android_client_info": {
+          "package_name": "edu.oregonstate.stulag.wasteagram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "439168924125-931056msie05sr0r0du2faugkpbt9vjd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxQ-O_mtw-XEZ5yEJcRIwAPlRutZO7U_w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "439168924125-931056msie05sr0r0du2faugkpbt9vjd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
