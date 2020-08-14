@@ -25,7 +25,7 @@ class _PostListState extends State<PostList> {
         },
       );
     } else {
-      return CircularProgressIndicator();
+      return Center(child: CircularProgressIndicator());
     }
   }
 }
