@@ -30,7 +30,6 @@ class _PostListState extends State<PostList> {
                       style: Theme.of(content).textTheme.headline5,
                     ),
                     title: Text(date),
-                    subtitle: Text(post['imageURL']),
                     onTap: () {
                       Navigator.pushNamed(context, PostScreen.routeName,
                           arguments: new Post(

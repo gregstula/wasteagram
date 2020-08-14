@@ -14,8 +14,12 @@ class _PostScreenState extends State<PostScreen> {
     return Scaffold(
         appBar: AppBar(centerTitle: true, title: Text(post.date)),
         body: Column(children: [
-          Image.network(post.imageURL, fit: BoxFit.scaleDown),
-          Text(post.wasted.toString(), textAlign: TextAlign.center)
+          Center(child: Image.network(post.imageURL, fit: BoxFit.scaleDown)),
+          Text(
+            post.wasted.toString(),
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headline3,
+          )
         ]));
   }
 }

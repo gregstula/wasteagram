@@ -34,7 +34,12 @@ class _NewPostScreenState extends State<NewPostScreen> {
   Widget build(BuildContext context) {
     // get file from route argument
     final File data = ModalRoute.of(context).settings.arguments;
-    var image = Center(child: Image.file(data)) ?? Text("Error.");
+    var image = Center(
+            child: Image.file(
+          data,
+          fit: BoxFit.scaleDown,
+        )) ??
+        Text("Error.");
     return Scaffold(
       // key: _scaffoldKey,
       appBar: AppBar(
